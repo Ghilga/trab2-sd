@@ -1,2 +1,2 @@
 # trab2-sd
-Trabalho 2 da disciplina de Sistemas Digitais da Universidade Federal do Rio Grande do Sul.
+Task 2 of the "Sistemas Digitais"(Digital Systems) class of Federal University of Rio Grande do Sul.
