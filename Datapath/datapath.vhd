@@ -41,6 +41,7 @@ entity datapath is
            cargaRI : in  STD_LOGIC;
            cargaREM : in  STD_LOGIC;
            cargaRDM : in  STD_LOGIC;
+			  incrementaPC: in STD_LOGIC;
            decoder : out  STD_LOGIC_VECTOR (7 downto 0);
            outRDM : out  STD_LOGIC_VECTOR (7 downto 0);
            outREM : out  STD_LOGIC_VECTOR (7 downto 0);
@@ -49,6 +50,7 @@ entity datapath is
 				);
 end datapath;
 
+
 architecture Behavioral of datapath is
 
 signal AC : std_logic_vector (7 downto 0);
@@ -56,23 +58,64 @@ signal regRDM : std_logic_vector (7 downto 0);
 signal regREM : std_logic_vector (7 downto 0);
 signal PC : std_logic_vector (7 downto 0);
 signal opcode : std_logic_vector (7 downto 0);
+signal address: std_logic_vector(7 downto 0);
+
+
+COMPONENT memoria_Neander
+  PORT (
+    clka : IN STD_LOGIC;
+    ena : IN STD_LOGIC;
+    wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+    dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+    clkb : IN STD_LOGIC;
+    enb : IN STD_LOGIC;
+    addrb : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+    doutb : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+  );
+END COMPONENT;
 
 
 
 
 begin
 
+mem_Neander: memoria_Neander
+  PORT MAP (
+    clka => clk,
+    ena => '1',
+    wea => '1',
+    addra => address ,
+    dina => regREM,
+    enb => enb,
+    doutb => doutb
+  );
 
----------------PC e multiplexador do REM--------------
+
+--------------------PC---------------------------
+process(clk, reset)
+begin
+	if reset = '1' then
+		PC <= (others => '0');
+	elsif rising_edge(clk) then
+		if cargaPC = '1' then
+			PC <= regRDM;
+		elsif incrementaPC = '1' then
+			PC <= PC + 1;
+		end if;
+		PC <= PC;
+	end if;
+end process;
+
+
+
+
+---------------multiplexador do REM--------------
 	process(clk,reset,selMux,regREM)
 	begin
 		if reset = '1' then
 			regREM <= (others => '0');
-			PC <= (others => '0');
 		elsif rising_edge(clk) then
-			if cargaPC = '1' then
-				PC <= regRDM;
-			end if;
 			if cargaREM = '1' then
 				case selMux is
 					when '1' => regREM <= PC;
@@ -120,19 +163,45 @@ begin
 		end if;
 	end process;
 
+--------------------------Decoder-------------------------
+-- process(clk,opcode,reset,regRDM)
+--	begin
+--		if reset = '1' then
+--			opcode <= (others => '0');
+--		elsif rising_edge(clk) then
+--			if cargaRI = '1' then
+--				opcode <= regRDM(7 downto 4) & "0000";
+--			end if;
+--			opcode <= opcode;
+--		end if;
+--		decoder <= opcode;
+--	end process;
+--
+--end Behavioral;
+
 ------------------Decoder-------------------------
-	process(clk,opcode,reset,regRDM)
+	process(clk,regRDM)
 	begin
-		if reset = '1' then
-			opcode <= (others => '0');
-		elsif rising_edge(clk) then
+		if rising_edge(clk) then
 			if cargaRI = '1' then
-				opcode <= regRDM(7 downto 4) & "0000";
+				opcode <= regRDM;
+				case opcode(7 downto 4) is
+					when "0000" => decoder <= "0000" & "0000";		--NOP
+					when "0001" =>	decoder <= "0001" & "0000";		--STA
+					when "0010" =>	decoder <= "0010" & "0000";		--LDA
+					when "0011" =>	decoder <= "0011" & "0000";		--ADD
+					when "0100" =>	decoder <= "0100" & "0000";		--OR
+					when "0101" =>	decoder <= "0101" & "0000";		--AND
+					when "0110" =>	decoder <= "0110" & "0000";		--NOT
+					when "0111" => decoder <= "0111" & "0000";
+					when "1000" =>	decoder <= "1000" & "0000";		--JMP
+					when "1001" =>	decoder <= "1001" & "0000";		--JN
+					when "1010" =>	decoder <= "1010" & "0000";		--JZ
+					when "1111" =>	decoder <= "1111" & "0000";		--HLT
+					when others =>	opcode <= opcode;		--dont care									
+				end case;
 			end if;
-			opcode <= opcode;
 		end if;
-		decoder <= opcode;
 	end process;
 
-end Behavioral;
 

@@ -19,6 +19,13 @@
       <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="1"/>
       <association xil_pn:name="Implementation" xil_pn:seqID="1"/>
     </file>
+    <file xil_pn:name="ipcore_dir/memoria_Neander.xco" xil_pn:type="FILE_COREGEN">
+      <association xil_pn:name="BehavioralSimulation" xil_pn:seqID="45"/>
+      <association xil_pn:name="Implementation" xil_pn:seqID="45"/>
+    </file>
+    <file xil_pn:name="ipcore_dir/memoria_Neander.xise" xil_pn:type="FILE_COREGENISE">
+      <association xil_pn:name="Implementation" xil_pn:seqID="46"/>
+    </file>
   </files>
 
   <properties>
