@@ -63,12 +63,16 @@ signal opcode : std_logic_vector (7 downto 0);
 begin
 
 
----------------multiplexador do REM--------------
+---------------PC e multiplexador do REM--------------
 	process(clk,reset,selMux,regREM)
 	begin
 		if reset = '1' then
 			regREM <= (others => '0');
+			PC <= (others => '0');
 		elsif rising_edge(clk) then
+			if cargaPC = '1' then
+				PC <= regRDM;
+			end if;
 			if cargaREM = '1' then
 				case selMux is
 					when '1' => regREM <= PC;
@@ -117,28 +121,17 @@ begin
 	end process;
 
 ------------------Decoder-------------------------
-	process(clk,regRDM)
+	process(clk,opcode,reset,regRDM)
 	begin
-		if rising_edge(clk) then
+		if reset = '1' then
+			opcode <= (others => '0');
+		elsif rising_edge(clk) then
 			if cargaRI = '1' then
-				opcode <= regRDM;
-				case opcode(7 downto 4) is
-					when "0000" => decoder <= "0000" & "0000";		--NOP
-					when "0001" =>	decoder <= "0001" & "0000";		--STA
-					when "0010" =>	decoder <= "0010" & "0000";		--LDA
-					when "0011" =>	decoder <= "0011" & "0000";		--ADD
-					when "0100" =>	decoder <= "0100" & "0000";		--OR
-					when "0101" =>	decoder <= "0101" & "0000";		--AND
-					when "0110" =>	decoder <= "0110" & "0000";		--NOT
-					when "0111" => decoder <= "0111" & "0000";
-					when "1000" =>	decoder <= "1000" & "0000";		--JMP
-					when "1001" =>	decoder <= "1001" & "0000";		--JN
-					when "1010" =>	decoder <= "1010" & "0000";		--JZ
-					when "1111" =>	decoder <= "1111" & "0000";		--HLT
-					when others =>	opcode <= opcode;		--dont care									
-				end case;
+				opcode <= regRDM(7 downto 4) & "0000";
 			end if;
+			opcode <= opcode;
 		end if;
+		decoder <= opcode;
 	end process;
 
 end Behavioral;

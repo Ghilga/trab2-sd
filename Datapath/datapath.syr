@@ -3,14 +3,14 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.13 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.12 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.13 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.12 secs
  
 --> Reading design: datapath.prj
 
@@ -105,7 +105,7 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "D:\Leo\UFRGS\SD\trab2\Datapath\Datapath\datapath.vhd" into library work
+Parsing VHDL file "D:\Leo\UFRGS\SD\trab2SD\Datapath\datapath.vhd" into library work
 Parsing entity <datapath>.
 Parsing architecture <Behavioral> of entity <datapath>.
 
@@ -114,29 +114,25 @@ Parsing architecture <Behavioral> of entity <datapath>.
 =========================================================================
 
 Elaborating entity <datapath> (architecture <Behavioral>) from library <work>.
-INFO:HDLCompiler:679 - "D:\Leo\UFRGS\SD\trab2\Datapath\Datapath\datapath.vhd" Line 75. Case statement is complete. others clause is never selected
-WARNING:HDLCompiler:634 - "D:\Leo\UFRGS\SD\trab2\Datapath\Datapath\datapath.vhd" Line 55: Net <regRDM[7]> does not have a driver.
+INFO:HDLCompiler:679 - "D:\Leo\UFRGS\SD\trab2SD\Datapath\datapath.vhd" Line 80. Case statement is complete. others clause is never selected
+WARNING:HDLCompiler:634 - "D:\Leo\UFRGS\SD\trab2SD\Datapath\datapath.vhd" Line 55: Net <regRDM[7]> does not have a driver.
 
 =========================================================================
 *                           HDL Synthesis                               *
 =========================================================================
 
 Synthesizing Unit <datapath>.
-    Related source file is "D:\Leo\UFRGS\SD\trab2\Datapath\Datapath\datapath.vhd".
-WARNING:Xst:647 - Input <selMux> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <cargaN> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <cargaZ> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <cargaAC> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <cargaPC> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Related source file is "D:\Leo\UFRGS\SD\trab2SD\Datapath\datapath.vhd".
 WARNING:Xst:647 - Input <cargaRI> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <cargaREM> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <cargaRDM> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:653 - Signal <regRDM> is used but never assigned. This sourceless signal will be automatically connected to value GND.
-    Found 8-bit register for signal <AC[7]_regRDM[7]_add_5_OUT>.
+    Found 8-bit register for signal <PC>.
+    Found 8-bit register for signal <GND_6_o_GND_6_o_sub_13_OUT<7:0>>.
+    Found 8-bit register for signal <outREM>.
     Found 2-bit register for signal <outNZ>.
     Summary:
 	inferred  10 D-type flip-flop(s).
-	inferred   2 Multiplexer(s).
+	inferred   4 Multiplexer(s).
 Unit <datapath> synthesized.
 
 =========================================================================
@@ -146,7 +142,8 @@ Macro Statistics
 # Registers                                            : 2
  2-bit register                                        : 1
  8-bit register                                        : 1
-# Multiplexers                                         : 2
+# Multiplexers                                         : 4
+ 1-bit 2-to-1 multiplexer                              : 2
  8-bit 2-to-1 multiplexer                              : 2
 
 =========================================================================
@@ -172,7 +169,7 @@ Macro Statistics
 =========================================================================
 
 Optimizing unit <datapath> ...
-INFO:Xst:2261 - The FF/Latch <AC_0> in Unit <datapath> is equivalent to the following 7 FFs/Latches, which will be removed : <AC_1> <AC_2> <AC_3> <AC_4> <AC_5> <AC_6> <AC_7> 
+INFO:Xst:2261 - The FF/Latch <AC_7> in Unit <datapath> is equivalent to the following 7 FFs/Latches, which will be removed : <AC_0> <AC_1> <AC_2> <AC_3> <AC_4> <AC_5> <AC_6> 
 
 Mapping all equations...
 Building and optimizing final netlist ...
@@ -208,18 +205,19 @@ Top Level Output File Name         : datapath.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 5
+# BELS                             : 6
 #      GND                         : 1
-#      INV                         : 2
-#      LUT3                        : 2
+#      INV                         : 1
+#      LUT3                        : 3
+#      LUT4                        : 1
 # FlipFlops/Latches                : 3
 #      FDCE                        : 1
 #      FDE                         : 2
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 14
-#      IBUF                        : 4
-#      OBUF                        : 10
+# IO Buffers                       : 25
+#      IBUF                        : 7
+#      OBUF                        : 18
 
 Device utilization summary:
 ---------------------------
@@ -229,19 +227,19 @@ Selected Device : 6slx16csg324-3
 
 Slice Logic Utilization: 
  Number of Slice Registers:               3  out of  18224     0%  
- Number of Slice LUTs:                    4  out of   9112     0%  
-    Number used as Logic:                 4  out of   9112     0%  
+ Number of Slice LUTs:                    5  out of   9112     0%  
+    Number used as Logic:                 5  out of   9112     0%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:      7
-   Number with an unused Flip Flop:       4  out of      7    57%  
-   Number with an unused LUT:             3  out of      7    42%  
-   Number of fully used LUT-FF pairs:     0  out of      7     0%  
+ Number of LUT Flip Flop pairs used:      8
+   Number with an unused Flip Flop:       5  out of      8    62%  
+   Number with an unused LUT:             3  out of      8    37%  
+   Number of fully used LUT-FF pairs:     0  out of      8     0%  
    Number of unique control sets:         2
 
 IO Utilization: 
  Number of IOs:                          39
- Number of bonded IOBs:                  15  out of    232     6%  
+ Number of bonded IOBs:                  26  out of    232    11%  
 
 Specific Feature Utilization:
  Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
@@ -278,9 +276,9 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 1.984ns (Maximum Frequency: 504.007MHz)
-   Minimum input arrival time before clock: 3.173ns
-   Maximum output required time after clock: 3.597ns
+   Minimum period: 1.473ns (Maximum Frequency: 678.771MHz)
+   Minimum input arrival time before clock: 3.153ns
+   Maximum output required time after clock: 3.634ns
    Maximum combinational path delay: No path found
 
 Timing Details:
@@ -289,51 +287,51 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 1.984ns (frequency: 504.007MHz)
-  Total number of paths / destination ports: 3 / 3
+  Clock period: 1.473ns (frequency: 678.771MHz)
+  Total number of paths / destination ports: 5 / 3
 -------------------------------------------------------------------------
-Delay:               1.984ns (Levels of Logic = 1)
-  Source:            AC_0 (FF)
+Delay:               1.473ns (Levels of Logic = 1)
+  Source:            outNZ_0 (FF)
   Destination:       outNZ_0 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: AC_0 to outNZ_0
+  Data Path: outNZ_0 to outNZ_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDCE:C->Q             3   0.447   0.650  AC_0 (AC_0)
-     INV:I->O              1   0.206   0.579  AC[7]_GND_6_o_equal_11_o<7>1_INV_0 (AC[7]_GND_6_o_equal_11_o)
+     FDE:C->Q              2   0.447   0.721  outNZ_0 (outNZ_0)
+     LUT3:I1->O            1   0.203   0.000  Mmux_outNZ[0]_AC[7]_MUX_16_o11 (outNZ[0]_AC[7]_MUX_16_o)
      FDE:D                     0.102          outNZ_0
     ----------------------------------------
-    Total                      1.984ns (0.755ns logic, 1.229ns route)
-                                       (38.1% logic, 61.9% route)
+    Total                      1.473ns (0.752ns logic, 0.721ns route)
+                                       (51.0% logic, 49.0% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 8 / 5
+  Total number of paths / destination ports: 11 / 7
 -------------------------------------------------------------------------
-Offset:              3.173ns (Levels of Logic = 2)
-  Source:            selUAL<2> (PAD)
-  Destination:       AC_0 (FF)
+Offset:              3.153ns (Levels of Logic = 2)
+  Source:            cargaAC (PAD)
+  Destination:       AC_7 (FF)
   Destination Clock: clk rising
 
-  Data Path: selUAL<2> to AC_0
+  Data Path: cargaAC to AC_7
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             2   1.222   0.845  selUAL_2_IBUF (selUAL_2_IBUF)
-     LUT3:I0->O            1   0.205   0.579  _n0053_inv1 (_n0053_inv)
-     FDCE:CE                   0.322          AC_0
+     IBUF:I->O             1   1.222   0.827  cargaAC_IBUF (cargaAC_IBUF)
+     LUT4:I0->O            1   0.203   0.579  _n0081_inv1 (_n0081_inv)
+     FDCE:CE                   0.322          AC_7
     ----------------------------------------
-    Total                      3.173ns (1.749ns logic, 1.424ns route)
-                                       (55.1% logic, 44.9% route)
+    Total                      3.153ns (1.747ns logic, 1.406ns route)
+                                       (55.4% logic, 44.6% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
   Total number of paths / destination ports: 2 / 2
 -------------------------------------------------------------------------
-Offset:              3.597ns (Levels of Logic = 1)
+Offset:              3.634ns (Levels of Logic = 1)
   Source:            outNZ_1 (FF)
   Destination:       outNZ<1> (PAD)
   Source Clock:      clk rising
@@ -342,11 +340,11 @@ Offset:              3.597ns (Levels of Logic = 1)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q              1   0.447   0.579  outNZ_1 (outNZ_1)
+     FDE:C->Q              2   0.447   0.616  outNZ_1 (outNZ_1)
      OBUF:I->O                 2.571          outNZ_1_OBUF (outNZ<1>)
     ----------------------------------------
-    Total                      3.597ns (3.018ns logic, 0.579ns route)
-                                       (83.9% logic, 16.1% route)
+    Total                      3.634ns (3.018ns logic, 0.616ns route)
+                                       (83.0% logic, 17.0% route)
 
 =========================================================================
 
@@ -358,20 +356,20 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    1.984|         |         |         |
+clk            |    1.473|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 5.19 secs
+Total REAL time to Xst completion: 6.00 secs
+Total CPU time to Xst completion: 5.17 secs
  
 --> 
 
 Total memory usage is 4523208 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   10 (   0 filtered)
+Number of warnings :    4 (   0 filtered)
 Number of infos    :    1 (   0 filtered)
 
