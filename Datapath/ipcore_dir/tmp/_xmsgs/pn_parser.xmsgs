@@ -8,7 +8,7 @@
 <!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.    -->
 
 <messages>
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/aluno/Desktop/trab2-sd-master/Datapath/ipcore_dir/tmp/_cg/memoria_Neander.vhd&quot; into library work</arg>
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;D:/Leo/GitHub/trab2-sd/Datapath/ipcore_dir/memoriaNeander.vhd&quot; into library work</arg>
 </msg>
 
 </messages>

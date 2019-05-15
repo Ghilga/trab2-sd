@@ -1,1 +1,2 @@
+vhdl work "ipcore_dir/memoriaNeander.vhd"
 vhdl work "datapath.vhd"

@@ -8,10 +8,7 @@
 <!-- Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.    -->
 
 <messages>
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/aluno/Desktop/trab2-sd-master/Datapath/datapath.vhd&quot; into library work</arg>
-</msg>
-
-<msg type="error" file="ProjectMgmt" num="849" >&quot;<arg fmt="%s" index="1">C:/Users/aluno/Desktop/trab2-sd-master/Datapath/datapath.vhd</arg>&quot; Line <arg fmt="%d" index="2">208</arg>. <arg fmt="%s" index="3">Unexpected EOF.</arg>
+<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;D:/Leo/GitHub/trab2-sd/Datapath/datapath.vhd&quot; into library work</arg>
 </msg>
 
 </messages>

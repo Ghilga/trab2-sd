@@ -3,14 +3,14 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 0.12 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.15 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 0.12 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.16 secs
  
 --> Reading design: datapath.prj
 
@@ -99,13 +99,19 @@ DSP48 Utilization Ratio            : 100
 Auto BRAM Packing                  : NO
 Slice Utilization Ratio Delta      : 5
 
+---- Other Options
+Cores Search Directories           : {"ipcore_dir"  }
+
 =========================================================================
 
 
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "D:\Leo\UFRGS\SD\trab2SD\Datapath\datapath.vhd" into library work
+Parsing VHDL file "D:\Leo\GitHub\trab2-sd\Datapath\ipcore_dir\memoriaNeander.vhd" into library work
+Parsing entity <memoriaNeander>.
+Parsing architecture <memoriaNeander_a> of entity <memorianeander>.
+Parsing VHDL file "D:\Leo\GitHub\trab2-sd\Datapath\datapath.vhd" into library work
 Parsing entity <datapath>.
 Parsing architecture <Behavioral> of entity <datapath>.
 
@@ -114,37 +120,44 @@ Parsing architecture <Behavioral> of entity <datapath>.
 =========================================================================
 
 Elaborating entity <datapath> (architecture <Behavioral>) from library <work>.
-INFO:HDLCompiler:679 - "D:\Leo\UFRGS\SD\trab2SD\Datapath\datapath.vhd" Line 80. Case statement is complete. others clause is never selected
-WARNING:HDLCompiler:634 - "D:\Leo\UFRGS\SD\trab2SD\Datapath\datapath.vhd" Line 55: Net <regRDM[7]> does not have a driver.
+
+Elaborating entity <memoriaNeander> (architecture <memoriaNeander_a>) from library <work>.
+INFO:HDLCompiler:679 - "D:\Leo\GitHub\trab2-sd\Datapath\datapath.vhd" Line 154. Case statement is complete. others clause is never selected
+WARNING:HDLCompiler:634 - "D:\Leo\GitHub\trab2-sd\Datapath\datapath.vhd" Line 57: Net <AC[7]> does not have a driver.
+WARNING:HDLCompiler:634 - "D:\Leo\GitHub\trab2-sd\Datapath\datapath.vhd" Line 61: Net <PC[7]> does not have a driver.
 
 =========================================================================
 *                           HDL Synthesis                               *
 =========================================================================
 
 Synthesizing Unit <datapath>.
-    Related source file is "D:\Leo\UFRGS\SD\trab2SD\Datapath\datapath.vhd".
-WARNING:Xst:647 - Input <cargaRI> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <cargaRDM> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:653 - Signal <regRDM> is used but never assigned. This sourceless signal will be automatically connected to value GND.
-    Found 8-bit register for signal <PC>.
-    Found 8-bit register for signal <GND_6_o_GND_6_o_sub_13_OUT<7:0>>.
-    Found 8-bit register for signal <outREM>.
+    Related source file is "D:\Leo\GitHub\trab2-sd\Datapath\datapath.vhd".
+WARNING:Xst:647 - Input <selUAL> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <cargaAC> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <cargaPC> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <incrementaPC> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:653 - Signal <AC> is used but never assigned. This sourceless signal will be automatically connected to value GND.
+WARNING:Xst:653 - Signal <PC> is used but never assigned. This sourceless signal will be automatically connected to value GND.
     Found 2-bit register for signal <outNZ>.
+    Found 8-bit register for signal <outRDM>.
+    Found 8-bit register for signal <outREM>.
+    Found 8-bit register for signal <opcode>.
+    Found 8-bit register for signal <decoder>.
     Summary:
-	inferred  10 D-type flip-flop(s).
-	inferred   4 Multiplexer(s).
+	inferred  34 D-type flip-flop(s).
+	inferred  10 Multiplexer(s).
 Unit <datapath> synthesized.
 
 =========================================================================
 HDL Synthesis Report
 
 Macro Statistics
-# Registers                                            : 2
+# Registers                                            : 5
  2-bit register                                        : 1
- 8-bit register                                        : 1
-# Multiplexers                                         : 4
+ 8-bit register                                        : 4
+# Multiplexers                                         : 10
  1-bit 2-to-1 multiplexer                              : 2
- 8-bit 2-to-1 multiplexer                              : 2
+ 8-bit 2-to-1 multiplexer                              : 8
 
 =========================================================================
 
@@ -152,24 +165,39 @@ Macro Statistics
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
+Reading core <ipcore_dir/memoriaNeander.ngc>.
+Loading core <memoriaNeander> for timing and area information for instance <mem_neander>.
+WARNING:Xst:2677 - Node <opcode_0> of sequential type is unconnected in block <datapath>.
+WARNING:Xst:2677 - Node <opcode_1> of sequential type is unconnected in block <datapath>.
+WARNING:Xst:2677 - Node <opcode_2> of sequential type is unconnected in block <datapath>.
+WARNING:Xst:2677 - Node <opcode_3> of sequential type is unconnected in block <datapath>.
+WARNING:Xst:2677 - Node <opcode_0> of sequential type is unconnected in block <datapath>.
+WARNING:Xst:2677 - Node <opcode_1> of sequential type is unconnected in block <datapath>.
+WARNING:Xst:2677 - Node <opcode_2> of sequential type is unconnected in block <datapath>.
+WARNING:Xst:2677 - Node <opcode_3> of sequential type is unconnected in block <datapath>.
 
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# Registers                                            : 10
- Flip-Flops                                            : 10
-# Multiplexers                                         : 2
- 8-bit 2-to-1 multiplexer                              : 2
+# Registers                                            : 30
+ Flip-Flops                                            : 30
+# Multiplexers                                         : 10
+ 1-bit 2-to-1 multiplexer                              : 2
+ 8-bit 2-to-1 multiplexer                              : 8
 
 =========================================================================
 
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
+WARNING:Xst:1710 - FF/Latch <regNZ_1> (without init value) has a constant value of 0 in block <datapath>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <decoder_0> (without init value) has a constant value of 0 in block <datapath>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <decoder_1> (without init value) has a constant value of 0 in block <datapath>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <decoder_2> (without init value) has a constant value of 0 in block <datapath>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <decoder_3> (without init value) has a constant value of 0 in block <datapath>. This FF/Latch will be trimmed during the optimization process.
 
 Optimizing unit <datapath> ...
-INFO:Xst:2261 - The FF/Latch <AC_7> in Unit <datapath> is equivalent to the following 7 FFs/Latches, which will be removed : <AC_0> <AC_1> <AC_2> <AC_3> <AC_4> <AC_5> <AC_6> 
 
 Mapping all equations...
 Building and optimizing final netlist ...
@@ -181,8 +209,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 3
- Flip-Flops                                            : 3
+# Registers                                            : 25
+ Flip-Flops                                            : 25
 
 =========================================================================
 
@@ -205,19 +233,24 @@ Top Level Output File Name         : datapath.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 6
-#      GND                         : 1
-#      INV                         : 1
-#      LUT3                        : 3
+# BELS                             : 23
+#      GND                         : 2
+#      LUT2                        : 17
+#      LUT3                        : 1
 #      LUT4                        : 1
-# FlipFlops/Latches                : 3
-#      FDCE                        : 1
-#      FDE                         : 2
+#      LUT5                        : 1
+#      VCC                         : 1
+# FlipFlops/Latches                : 25
+#      FDC                         : 9
+#      FDCE                        : 8
+#      FDE                         : 8
+# RAMS                             : 1
+#      RAMB8BWER                   : 1
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 25
+# IO Buffers                       : 33
 #      IBUF                        : 7
-#      OBUF                        : 18
+#      OBUF                        : 26
 
 Device utilization summary:
 ---------------------------
@@ -226,22 +259,24 @@ Selected Device : 6slx16csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:               3  out of  18224     0%  
- Number of Slice LUTs:                    5  out of   9112     0%  
-    Number used as Logic:                 5  out of   9112     0%  
+ Number of Slice Registers:              25  out of  18224     0%  
+ Number of Slice LUTs:                   20  out of   9112     0%  
+    Number used as Logic:                20  out of   9112     0%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:      8
-   Number with an unused Flip Flop:       5  out of      8    62%  
-   Number with an unused LUT:             3  out of      8    37%  
-   Number of fully used LUT-FF pairs:     0  out of      8     0%  
-   Number of unique control sets:         2
+ Number of LUT Flip Flop pairs used:     26
+   Number with an unused Flip Flop:       1  out of     26     3%  
+   Number with an unused LUT:             6  out of     26    23%  
+   Number of fully used LUT-FF pairs:    19  out of     26    73%  
+   Number of unique control sets:         3
 
 IO Utilization: 
- Number of IOs:                          39
- Number of bonded IOBs:                  26  out of    232    11%  
+ Number of IOs:                          41
+ Number of bonded IOBs:                  34  out of    232    14%  
 
 Specific Feature Utilization:
+ Number of Block RAM/FIFO:                1  out of     32     3%  
+    Number using Block RAM only:          1
  Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
 
 ---------------------------
@@ -265,7 +300,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 3     |
+clk                                | BUFGP                  | 26    |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -276,9 +311,9 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 1.473ns (Maximum Frequency: 678.771MHz)
-   Minimum input arrival time before clock: 3.153ns
-   Maximum output required time after clock: 3.634ns
+   Minimum period: 2.737ns (Maximum Frequency: 365.384MHz)
+   Minimum input arrival time before clock: 3.472ns
+   Maximum output required time after clock: 3.701ns
    Maximum combinational path delay: No path found
 
 Timing Details:
@@ -287,64 +322,65 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 1.473ns (frequency: 678.771MHz)
-  Total number of paths / destination ports: 5 / 3
+  Clock period: 2.737ns (frequency: 365.384MHz)
+  Total number of paths / destination ports: 86 / 57
 -------------------------------------------------------------------------
-Delay:               1.473ns (Levels of Logic = 1)
-  Source:            outNZ_0 (FF)
-  Destination:       outNZ_0 (FF)
+Delay:               2.737ns (Levels of Logic = 2)
+  Source:            mem_neander/U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram (RAM)
+  Destination:       regRDM_4 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: outNZ_0 to outNZ_0
+  Data Path: mem_neander/U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram to regRDM_4
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q              2   0.447   0.721  outNZ_0 (outNZ_0)
-     LUT3:I1->O            1   0.203   0.000  Mmux_outNZ[0]_AC[7]_MUX_16_o11 (outNZ[0]_AC[7]_MUX_16_o)
-     FDE:D                     0.102          outNZ_0
+     RAMB8BWER:CLKBRDCLK->DOBDO0    1   1.850   0.580  U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram (douta<4>)
+     end scope: 'mem_neander:douta<4>'
+     LUT2:I1->O            1   0.205   0.000  Mmux_AC[7]_saidaMem[7]_mux_7_OUT51 (AC[7]_saidaMem[7]_mux_7_OUT<4>)
+     FDC:D                     0.102          regRDM_4
     ----------------------------------------
-    Total                      1.473ns (0.752ns logic, 0.721ns route)
-                                       (51.0% logic, 49.0% route)
+    Total                      2.737ns (2.157ns logic, 0.580ns route)
+                                       (78.8% logic, 21.2% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 11 / 7
+  Total number of paths / destination ports: 54 / 54
 -------------------------------------------------------------------------
-Offset:              3.153ns (Levels of Logic = 2)
-  Source:            cargaAC (PAD)
-  Destination:       AC_7 (FF)
+Offset:              3.472ns (Levels of Logic = 2)
+  Source:            cargaRI (PAD)
+  Destination:       opcode_4 (FF)
   Destination Clock: clk rising
 
-  Data Path: cargaAC to AC_7
+  Data Path: cargaRI to opcode_4
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             1   1.222   0.827  cargaAC_IBUF (cargaAC_IBUF)
-     LUT4:I0->O            1   0.203   0.579  _n0081_inv1 (_n0081_inv)
-     FDCE:CE                   0.322          AC_7
+     IBUF:I->O             1   1.222   0.924  cargaRI_IBUF (cargaRI_IBUF)
+     LUT5:I0->O            8   0.203   0.802  _n0059_inv1 (_n0059_inv)
+     FDE:CE                    0.322          opcode_4
     ----------------------------------------
-    Total                      3.153ns (1.747ns logic, 1.406ns route)
-                                       (55.4% logic, 44.6% route)
+    Total                      3.472ns (1.747ns logic, 1.725ns route)
+                                       (50.3% logic, 49.7% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
-  Total number of paths / destination ports: 2 / 2
+  Total number of paths / destination ports: 21 / 21
 -------------------------------------------------------------------------
-Offset:              3.634ns (Levels of Logic = 1)
-  Source:            outNZ_1 (FF)
-  Destination:       outNZ<1> (PAD)
+Offset:              3.701ns (Levels of Logic = 1)
+  Source:            regRDM_7 (FF)
+  Destination:       outRDM<7> (PAD)
   Source Clock:      clk rising
 
-  Data Path: outNZ_1 to outNZ<1>
+  Data Path: regRDM_7 to outRDM<7>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q              2   0.447   0.616  outNZ_1 (outNZ_1)
-     OBUF:I->O                 2.571          outNZ_1_OBUF (outNZ<1>)
+     FDC:C->Q              4   0.447   0.683  regRDM_7 (regRDM_7)
+     OBUF:I->O                 2.571          outRDM_7_OBUF (outRDM<7>)
     ----------------------------------------
-    Total                      3.634ns (3.018ns logic, 0.616ns route)
-                                       (83.0% logic, 17.0% route)
+    Total                      3.701ns (3.018ns logic, 0.683ns route)
+                                       (81.6% logic, 18.4% route)
 
 =========================================================================
 
@@ -356,20 +392,20 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    1.473|         |         |         |
+clk            |    2.737|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 6.00 secs
-Total CPU time to Xst completion: 5.17 secs
+Total REAL time to Xst completion: 10.00 secs
+Total CPU time to Xst completion: 9.89 secs
  
 --> 
 
 Total memory usage is 4523208 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    4 (   0 filtered)
-Number of infos    :    1 (   0 filtered)
+Number of warnings :   21 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
 

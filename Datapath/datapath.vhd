@@ -42,6 +42,7 @@ entity datapath is
            cargaREM : in  STD_LOGIC;
            cargaRDM : in  STD_LOGIC;
 			  incrementaPC: in STD_LOGIC;
+			  read_write : in STD_LOGIC_VECTOR (0 downto 0);
            decoder : out  STD_LOGIC_VECTOR (7 downto 0);
            outRDM : out  STD_LOGIC_VECTOR (7 downto 0);
            outREM : out  STD_LOGIC_VECTOR (7 downto 0);
@@ -56,62 +57,92 @@ architecture Behavioral of datapath is
 signal AC : std_logic_vector (7 downto 0);
 signal regRDM : std_logic_vector (7 downto 0);
 signal regREM : std_logic_vector (7 downto 0);
+signal regNZ : std_logic_vector (1 downto 0);
 signal PC : std_logic_vector (7 downto 0);
 signal opcode : std_logic_vector (7 downto 0);
 signal address: std_logic_vector(7 downto 0);
+signal saidaMem : std_logic_vector (7 downto 0);
 
 
-COMPONENT memoria_Neander
+COMPONENT memoriaNeander
   PORT (
     clka : IN STD_LOGIC;
-    ena : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-    addra : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-    clkb : IN STD_LOGIC;
-    enb : IN STD_LOGIC;
-    addrb : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-    doutb : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+    douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
   );
 END COMPONENT;
 
 
-
-
 begin
-
-mem_Neander: memoria_Neander
-  PORT MAP (
-    clka => clk,
-    ena => '1',
-    wea => '1',
-    addra => address ,
-    dina => regREM,
-    enb => enb,
-    doutb => doutb
-  );
-
+-----------------Memoria Neander-----------------
+	mem_neander : memoriaNeander
+	  PORT MAP (
+		 clka => clk,
+		 wea => read_write,
+		 addra => regREM,
+		 dina => regRDM,
+		 douta => saidaMem
+	  );
 
 --------------------PC---------------------------
-process(clk, reset)
-begin
-	if reset = '1' then
-		PC <= (others => '0');
-	elsif rising_edge(clk) then
-		if cargaPC = '1' then
-			PC <= regRDM;
-		elsif incrementaPC = '1' then
-			PC <= PC + 1;
+	process(clk,PC,reset,cargaPC,incrementaPC,regRDM)
+	begin
+		if reset = '1' then
+			PC <= (others => '0');
+		elsif rising_edge(clk) then
+			if cargaPC = '1' then
+				PC <= regRDM;
+			elsif incrementaPC = '1' then
+				PC <= PC + 1;
+			end if;
 		end if;
 		PC <= PC;
-	end if;
-end process;
+	end process;
 
+--------------------regNZ------------------------
+	process(clk,AC,reset,regNZ,cargaZ,cargaN)
+	begin
+		if reset = '1' then
+			regNZ <= (others => '0');
+		elsif rising_edge(clk) then
+			if cargaZ = '1' then
+				if AC = "00000000" then
+					regNZ(0) <= '1';
+				else
+					regNZ(0) <= '0';
+				end if;
+			end if;
+			
+			if cargaN = '1' then
+				if AC(7) = '1' then
+					regNZ(1) <= '1';
+				else
+					regNZ(1) <= '0';
+				end if;
+			end if;
+		end if;
+		outNZ <= regNZ;
+	end process;
 
-
+--------------------RDM--------------------------
+	process(clk,reset,regRDM,cargaRDM)
+	begin
+		if reset = '1' then
+			regRDM <= (others => '0');
+		elsif rising_edge(clk) then
+			if cargaRDM = '1' then
+				regRDM <= saidaMem;
+			else
+				regRDM <= AC;
+			end if;
+		end if;
+		outRDM <= regRDM;
+	end process;
 
 ---------------multiplexador do REM--------------
-	process(clk,reset,selMux,regREM)
+	process(clk,reset,selMux,regREM,cargaREM)
 	begin
 		if reset = '1' then
 			regREM <= (others => '0');
@@ -127,8 +158,8 @@ end process;
 		outREM <= regREM;
 	end process;
 	
--------------------UAL---------------------------
-	process(clk,reset,selUAL)
+----------------UAL e Acumulador-----------------
+	process(clk,reset,selUAL,AC,cargaAC,regRDM)
 	begin
 		if reset = '1' then
 			AC <= (others => '0');
@@ -144,23 +175,8 @@ end process;
 					when others => AC <= AC;
 				end case;
 			end if;
-			
-			if cargaZ = '1' then
-				if AC = "00000000" then
-					outNZ(0) <= '1';
-				else
-					outNZ(0) <= '0';
-				end if;
-			end if;
-			
-			if cargaN = '1' then
-				if AC(7) = '1' then
-					outNZ(1) <= '1';
-				else
-					outNZ(1) <= '0';
-				end if;
-			end if;
 		end if;
+		AC <= AC;
 	end process;
 
 --------------------------Decoder-------------------------
@@ -193,7 +209,7 @@ end process;
 					when "0100" =>	decoder <= "0100" & "0000";		--OR
 					when "0101" =>	decoder <= "0101" & "0000";		--AND
 					when "0110" =>	decoder <= "0110" & "0000";		--NOT
-					when "0111" => decoder <= "0111" & "0000";
+					when "0111" => decoder <= "0111" & "0000";		--SUB
 					when "1000" =>	decoder <= "1000" & "0000";		--JMP
 					when "1001" =>	decoder <= "1001" & "0000";		--JN
 					when "1010" =>	decoder <= "1010" & "0000";		--JZ
@@ -204,4 +220,4 @@ end process;
 		end if;
 	end process;
 
-
+end architecture;
